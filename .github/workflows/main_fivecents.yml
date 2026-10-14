@@ -54,6 +54,9 @@ jobs:
         with:
           name: node-app
 
+      - name: Package standalone app including Next.js assets
+        run: zip -qr release.zip . -x release.zip
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -67,5 +70,5 @@ jobs:
         with:
           app-name: 'fivecents'
           slot-name: 'Production'
-          package: .
+          package: release.zip
 
