@@ -64,11 +64,14 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_407ED8EEAEA042F8BFC75C1CD5BDF467 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1AF588522A264E5EBE963FF3CAAB5B06 }}
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'fivecents'
-          slot-name: 'Production'
-          package: release.zip
+      - name: Deploy clean package to Azure Web App
+        run: |
+          az webapp deploy \
+            --resource-group rg-tokencraze \
+            --name fivecents \
+            --src-path release.zip \
+            --type zip \
+            --clean true \
+            --restart true \
+            --track-status true
 
